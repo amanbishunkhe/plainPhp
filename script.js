@@ -11,7 +11,12 @@
                 // Get form data
                 const name = document.getElementById('name').value.trim();
                 const email = document.getElementById('email').value.trim();
+                const profile_picture = document.getElementById('profile_picture');
+                const profile_picture_file = profile_picture.files[0];
 
+                const formDatas = new FormData( form );
+                console.log( formDatas ,'new form datas');
+           //     console.log( profile_picture_file ,'pic');
                 // Client-side validation
                 if (!name) {
                     alert("Name field cannot be empty.");
@@ -34,17 +39,15 @@
                 const formData = new URLSearchParams();
                 formData.append('name', name);
                 formData.append('email', email);
+                formData.append('profile_picture', profile_picture_file );
 
-                console.log( formData,'form' );
+            //    console.log( formData,'form' );
 
                 // Send data to the server using Fetch API (POST method)
                 try {
                     const response = await fetch('insert.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: formData.toString(),
+                        method: 'POST',                        
+                        body: formDatas
                     });
 
                     const result = await response.text();
